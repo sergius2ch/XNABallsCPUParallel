@@ -20,6 +20,8 @@ namespace BallsXNA
     [Serializable]
     public class Ball
     {
+        public static int Diameter;
+        public static int Radius;
         public int _id;
         public Cell currentCell;
 
