@@ -29,6 +29,9 @@ namespace BallsXNA
         /// </summary>
         Rectangle field;
 
+        private int gridRows;
+        private int gridColumns;
+
         /// <summary>
         /// Конструктор менеджера
         /// </summary>
@@ -60,6 +63,8 @@ namespace BallsXNA
             List<int> listX = new List<int>(columns * rows);
             List<int> listY = new List<int>(columns * rows);
             //----------------------------------------------
+            gridRows = rows+1;
+            gridColumns = columns+1;
             grid = new Cell[rows+1, columns+1];
             //----------------------------------------------
             x = field.Left + Radius;
@@ -115,7 +120,7 @@ namespace BallsXNA
         public void Update()
         {
             MoveBalls();
-            CheckBorders();           
+            CheckBorders4Grid();           
             CheckCollisions4Grid();
         }
 
@@ -142,6 +147,91 @@ namespace BallsXNA
                 }
             }
         }
+
+        protected  void CheckBorders4Grid()
+        {
+            for (int ri = 0; ri < gridRows; ri++)
+            {
+                Cell leftcell = grid[ri, 0];
+                #region Проверка только левой границы
+                for (int j = 0; j < leftcell.items.Count; j++)
+                {
+                    Ball ball = balls[leftcell.items[j]];
+                    ball.OnEdge = false;
+                    if (ball.x - Radius <= field.Left)
+                    { // шарик отскакивает от левой границы
+                        ball.vx = -ball.vx;
+                        if (ball.x - Radius < field.Left)
+                        {
+                            float dx = field.Left - (ball.x - Radius);
+                            ball.x += dx + 1;
+                        }
+                        ball.OnEdge = true;
+                    }
+                }
+                #endregion
+                Cell rightcell = grid[ri, gridColumns-1];
+                #region Проверка только правой границы
+                for (int j = 0; j < rightcell.items.Count; j++)
+                {
+                    Ball ball = balls[rightcell.items[j]];
+                    ball.OnEdge = false;
+                    if (ball.x + Radius >= field.Right)
+                    { // шарик отскакивает от правой границы
+                        ball.vx = -ball.vx;
+                        if (ball.x + Radius > field.Right)
+                        {
+                            float dx = (ball.x + Radius) - field.Right;
+                            ball.x -= dx + 1;
+                        }
+                        if (ball.OnEdge) return;
+                        ball.OnEdge = true;
+                    }
+                }
+                #endregion
+            }
+            for (int ci = 0; ci < gridColumns; ci++)
+            {
+                Cell topcell = grid[0, ci];
+                #region Проверка только верхней границы
+                for (int j = 0; j < topcell.items.Count; j++)
+                {
+                    Ball ball = balls[topcell.items[j]];
+                    ball.OnEdge = false;
+                    if (ball.y - Radius <= field.Top)
+                    { // шарик отскакивает от верхней границы
+                        ball.vy = -ball.vy;
+                        if (ball.y - Radius < field.Top)
+                        {
+                            float dy = field.Top - (ball.y - Radius);
+                            ball.y += dy + 1;
+                        }
+                        if (ball.OnEdge) return;
+                        ball.OnEdge = true;
+                    }
+                }
+                #endregion
+                Cell bottomcell = grid[gridRows-1, ci];
+                #region Проверка только нижней границы
+                for (int j = 0; j < bottomcell.items.Count; j++)
+                {
+                    Ball ball = balls[bottomcell.items[j]];
+                    ball.OnEdge = false;
+                    if (ball.y + Radius >= field.Bottom)
+                    { // шарик отскакивает от нижней границы
+                        ball.vy = -ball.vy;
+                        if (ball.y + Radius > field.Bottom)
+                        {
+                            float dy = (ball.y + Radius) - field.Bottom;
+                            ball.y -= dy + 1;
+                        }
+                        ball.OnEdge = true;
+                    }
+                }
+                #endregion
+            }
+        }
+
 
         /// <summary>
         /// Проверка на столкновения с границами
@@ -199,9 +289,9 @@ namespace BallsXNA
         protected List<int> list = new List<int>(64);
         protected void CheckCollisions4Grid()
         {
-            for (int i = 0; i < grid.GetLength(0); i++)
+            for (int i = 0; i < gridRows; i++)
             {
-                for (int j = 0; j < grid.GetLength(1); j++)
+                for (int j = 0; j < gridColumns; j++)
                 {
                     Cell cell = grid[i, j];
                     if (cell.items.Count == 0) continue;
@@ -219,16 +309,16 @@ namespace BallsXNA
                     }
                     #endregion
                     #region собираем списки шариков из соседних ячеек
-                    if (j < grid.GetLength(1) - 1)
+                    if (j < gridColumns - 1)
                     {
                         Cell cellright = grid[i, j+1];
                         list.AddRange(cellright.items);
                     }
-                    if (i < grid.GetLength(0) - 1)
+                    if (i < gridRows - 1)
                     {
                         Cell celldown = grid[i+1, j];
                         list.AddRange(celldown.items);
-                        if (j < grid.GetLength(1) - 1)
+                        if (j < gridColumns - 1)
                         {
                             Cell cellcross = grid[i + 1, j + 1];
                             list.AddRange(cellcross.items);

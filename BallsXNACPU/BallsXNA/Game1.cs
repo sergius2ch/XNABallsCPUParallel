@@ -40,9 +40,10 @@ namespace BallsXNA
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            /*
             graphics.IsFullScreen = true;
             graphics.PreferredBackBufferWidth = 1366;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferHeight = 768;*/
         }
 
         /// <summary>
