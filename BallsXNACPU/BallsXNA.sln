@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010 Express for Windows Phone
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallsXNA", "BallsXNA\BallsXNA.csproj", "{7F76CC05-1409-4305-9551-454665B71F46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallsXNAContent", "BallsXNA\Content\BallsXNAContent.contentproj", "{9FD40E68-1F02-468A-AE87-AC1D961FDA5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F76CC05-1409-4305-9551-454665B71F46}.Debug|x86.ActiveCfg = Debug|x86
+		{7F76CC05-1409-4305-9551-454665B71F46}.Debug|x86.Build.0 = Debug|x86
+		{7F76CC05-1409-4305-9551-454665B71F46}.Release|x86.ActiveCfg = Release|x86
+		{7F76CC05-1409-4305-9551-454665B71F46}.Release|x86.Build.0 = Release|x86
+		{9FD40E68-1F02-468A-AE87-AC1D961FDA5C}.Debug|x86.ActiveCfg = Debug|x86
+		{9FD40E68-1F02-468A-AE87-AC1D961FDA5C}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
