@@ -40,10 +40,10 @@ namespace BallsXNA
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            /*
+            
             graphics.IsFullScreen = true;
             graphics.PreferredBackBufferWidth = 1366;
-            graphics.PreferredBackBufferHeight = 768;*/
+            graphics.PreferredBackBufferHeight = 768;
         }
 
         /// <summary>
@@ -67,11 +67,11 @@ namespace BallsXNA
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            BallTex = Content.Load<Texture2D>("smallball");
+            BallTex = Content.Load<Texture2D>("molecule");
             Cursor = Content.Load<Texture2D>("Mouse");
 
             // включаем менеджер логики
-            manager = new Manager(3000, BallTex.Width,
+            manager = new Manager(25000, BallTex.Width,
                 new Rectangle(1, 1, graphics.PreferredBackBufferWidth-1,
                     graphics.PreferredBackBufferHeight-1));
             // TODO: use this.Content to load your game content here
